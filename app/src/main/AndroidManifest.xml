@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ManosADomicilio">
         <activity
-            android:name=".MainActivity"
+            android:name=".view.InicioSesion"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,6 +20,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".view.Perfil" android:exported="true"/>
+        <activity android:name=".view.CategoriaCerrajeria" android:exported="true"/>
+        <activity android:name=".view.CategoriaFumigacion" android:exported="true"/>
+        <activity android:name=".view.CategoriaJardineria" android:exported="true"/>
+        <activity android:name=".view.CategoriaLimpieza" android:exported="true"/>
+        <activity android:name=".view.CategoriaPintura" android:exported="true"/>
+        <activity android:name=".view.Home" android:exported="true"/>
+        <activity android:name=".view.Registro" android:exported="true"/>
     </application>
 
 </manifest>
