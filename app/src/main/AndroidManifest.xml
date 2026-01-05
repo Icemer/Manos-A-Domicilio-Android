@@ -28,7 +28,13 @@
         <activity android:name=".view.CategoriaLimpieza" android:exported="true"/>
         <activity android:name=".view.CategoriaPintura" android:exported="true"/>
         <activity android:name=".view.Home" android:exported="true"/>
-        <activity android:name=".view.Registro" android:exported="true"/>
+        <activity android:name=".view.RegistroUsuario" android:exported="true"/>
+        <activity android:name=".view.RegistroTrabajador" android:exported="true"/>
+        <activity android:name=".view.DetalleTrabajador"/>
+        <activity android:name=".view.SolicitudServicio"/>
+        <activity android:name=".view.HistorialServicios" />
+        <activity android:name=".view.DetalleServicioActivity" />
+        <activity android:name=".view.Favoritos" />" />
     </application>
 
 </manifest>

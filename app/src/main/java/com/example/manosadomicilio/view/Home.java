@@ -2,6 +2,7 @@ package com.example.manosadomicilio.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
@@ -15,6 +16,7 @@ import com.example.manosadomicilio.controller.BottomMenu;
 public class Home extends BottomMenu {
 
     public ImageView ivCerrajeria, ivLimpieza, ivPintura, ivFumigacion, ivJardineria;
+    Button btnRegistrarse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class Home extends BottomMenu {
         ivPintura = findViewById(R.id.ivPintura);
         ivFumigacion = findViewById(R.id.ivFumigacion);
         ivJardineria = findViewById(R.id.ivJardineria);
+        btnRegistrarse = findViewById(R.id.btnRegistrarse);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -57,6 +60,11 @@ public class Home extends BottomMenu {
 
         ivJardineria.setOnClickListener(v -> {
             Intent intent = new Intent(Home.this, CategoriaJardineria.class);
+            startActivity(intent);
+        });
+
+        btnRegistrarse.setOnClickListener(v -> {
+            Intent intent = new Intent(Home.this, RegistroTrabajador.class);
             startActivity(intent);
         });
     }

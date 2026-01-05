@@ -1,17 +1,22 @@
 package com.example.manosadomicilio.view;
 
-import android.os.Bundle;
-
 import com.example.manosadomicilio.R;
-import com.example.manosadomicilio.controller.BottomMenu;
 
-public class CategoriaJardineria extends BottomMenu {
+public class CategoriaJardineria extends BaseCategoriaActivity {
+    private static final int ID_JARDINERIA = 5;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.categoria_jardineria);
-        setupBottomMenu();
+    protected int getCategoriaId() {
+        return ID_JARDINERIA;
+    }
 
+    @Override
+    protected int getLayoutId() {
+        return R.layout.categoria_fumigacion;
+    }
+
+    @Override
+    protected String getNoTrabajadoresMessage() {
+        return "No se encontraron jardineros";
     }
 }

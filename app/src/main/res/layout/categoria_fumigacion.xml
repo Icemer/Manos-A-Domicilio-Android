@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -27,125 +26,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_primer_cerrajero"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="24dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_titulo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="12dp">
-
-            <ImageView
-                android:id="@+id/ivAvatar"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/avatar_perfil"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
-
-            <TextView
-                android:id="@+id/tvNombre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Carlos Pérez"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginStart="12dp"
-                app:layout_constraintStart_toEndOf="@id/ivAvatar"
-                app:layout_constraintTop_toTopOf="@id/ivAvatar" />
-
-            <ImageView
-                android:id="@+id/ivEstrella"
-                android:layout_width="20dp"
-                android:layout_height="19dp"
-                android:layout_marginTop="4dp"
-                android:src="@drawable/estrella_dorada"
-                app:layout_constraintStart_toStartOf="@id/tvNombre"
-                app:layout_constraintTop_toBottomOf="@id/tvNombre"/>
-
-            <TextView
-                android:id="@+id/tvCalificacion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="4.4 Estrellas"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp"
-                android:layout_marginStart="4dp"
-                app:layout_constraintStart_toEndOf="@id/ivEstrella"
-                app:layout_constraintTop_toBottomOf="@id/tvNombre" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_segunda_cerrajero"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="10dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
-        app:layout_constraintTop_toBottomOf="@id/card_primer_cerrajero"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_titulo"
+        app:layout_constraintBottom_toTopOf="@id/menuInferior"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:id="@+id/contenedorTrabajadores"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp">
-
-            <ImageView
-                android:id="@+id/ivAvatar2"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/avatar_perfil"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
-
-            <TextView
-                android:id="@+id/tvNombre2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="López López"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginStart="12dp"
-                app:layout_constraintStart_toEndOf="@id/ivAvatar2"
-                app:layout_constraintTop_toTopOf="@id/ivAvatar2" />
-
-            <ImageView
-                android:id="@+id/ivEstrella2"
-                android:layout_width="20dp"
-                android:layout_height="19dp"
-                android:layout_marginTop="4dp"
-                android:src="@drawable/estrella_dorada"
-                app:layout_constraintStart_toStartOf="@id/tvNombre2"
-                app:layout_constraintTop_toBottomOf="@id/tvNombre2"/>
-
-            <TextView
-                android:id="@+id/tvCalificacion2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2.4 Estrellas"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp"
-                android:layout_marginStart="4dp"
-                app:layout_constraintStart_toEndOf="@id/ivEstrella2"
-                app:layout_constraintTop_toBottomOf="@id/tvNombre2" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+            android:orientation="vertical"
+            android:paddingBottom="20dp" />
+    </ScrollView>
 
     <include
         layout="@layout/bottom_menu"

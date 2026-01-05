@@ -1,17 +1,22 @@
 package com.example.manosadomicilio.view;
 
-import android.os.Bundle;
-
 import com.example.manosadomicilio.R;
-import com.example.manosadomicilio.controller.BottomMenu;
 
-public class CategoriaCerrajeria extends BottomMenu {
+public class CategoriaCerrajeria extends BaseCategoriaActivity {
+    private static final int ID_CERRAJERIA = 3;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.categoria_cerrajeria);
-        setupBottomMenu();
+    protected int getCategoriaId() {
+        return ID_CERRAJERIA;
+    }
 
+    @Override
+    protected int getLayoutId() {
+        return R.layout.categoria_cerrajeria;
+    }
+
+    @Override
+    protected String getNoTrabajadoresMessage() {
+        return "No se encontraron cerrajeros";
     }
 }
