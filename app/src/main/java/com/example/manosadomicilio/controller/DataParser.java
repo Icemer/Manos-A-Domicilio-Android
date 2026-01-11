@@ -49,6 +49,13 @@ public class DataParser {
 
             Trabajador trabajador = new Trabajador(id, -1, categoriaId, true, descripcion);
             trabajador.setNombreUsuario(nombreUsuario);
+            
+            // Si la consulta incluyó categorias(nombre)
+            if (obj.has("categorias") && !obj.isNull("categorias")) {
+                JSONObject catObj = obj.getJSONObject("categorias");
+                trabajador.setNombreCategoria(catObj.optString("nombre", "N/A"));
+            }
+            
             trabajadores.add(trabajador);
         }
         return trabajadores;
@@ -88,7 +95,14 @@ public class DataParser {
 
             Servicio servicio = new Servicio(id, usuarioId, trabajadorId, categoriaId, direccionClienteId,
                     fecha, horaInicial, descripcion, estado, precio,
-                    calificacionTrabajador, calificacionCliente);
+                    calificacionCliente, calificacionTrabajador);
+
+            if (!obj.isNull("comentarios_cliente")) {
+                servicio.setComentariosCliente(obj.getString("comentarios_cliente"));
+            }
+            if (!obj.isNull("comentarios_trabajador")) {
+                servicio.setComentariosTrabajador(obj.getString("comentarios_trabajador"));
+            }
 
             if (obj.has("trabajadores") && !obj.isNull("trabajadores")) {
                 JSONObject trabajadorObj = obj.getJSONObject("trabajadores");
@@ -96,6 +110,29 @@ public class DataParser {
                     JSONObject usuarioObj = trabajadorObj.getJSONObject("usuarios");
                     servicio.setNombreTrabajador(usuarioObj.optString("name", "N/A"));
                 }
+            }
+
+            if (obj.has("usuarios") && !obj.isNull("usuarios")) {
+                JSONObject usuarioObj = obj.getJSONObject("usuarios");
+                servicio.setNombreCliente(usuarioObj.optString("name", "N/A"));
+            }
+
+            if (obj.has("pagos") && !obj.isNull("pagos")) {
+                JSONArray pagosArray = obj.getJSONArray("pagos");
+                if (pagosArray.length() > 0) {
+                    servicio.setPagoRealizado(true);
+                }
+            }
+
+            if (obj.has("direcciones_cliente") && !obj.isNull("direcciones_cliente")) {
+                JSONObject dirObj = obj.getJSONObject("direcciones_cliente");
+                String calle = dirObj.optString("calle", "");
+                String numero = dirObj.optString("numero", "");
+                String colonia = dirObj.optString("colonia", "");
+                String municipio = dirObj.optString("municipio", "");
+                
+                String direccionCompleta = String.format("%s %s, %s, %s", calle, numero, colonia, municipio).trim();
+                servicio.setDireccionCompleta(direccionCompleta.isEmpty() ? "N/A" : direccionCompleta);
             }
 
             servicios.add(servicio);
@@ -106,39 +143,54 @@ public class DataParser {
     public static List<Trabajador> parseFavoritos(String jsonResponse) throws JSONException {
         List<Trabajador> favoritos = new ArrayList<>();
         JSONArray jsonArray = new JSONArray(jsonResponse);
-
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject favoritoObj = jsonArray.getJSONObject(i);
-            JSONObject trabajadorObj = favoritoObj.getJSONObject("trabajadores");
-
-            int id = trabajadorObj.getInt("id");
-            int usuarioId = trabajadorObj.getInt("usuario_id");
-            int categoriaId = trabajadorObj.getInt("categoria_id");
-            boolean disponibilidad = trabajadorObj.getBoolean("disponibilidad");
-            String descripcion = trabajadorObj.getString("descripcion");
-
-            Trabajador trabajador = new Trabajador(id, usuarioId, categoriaId, disponibilidad, descripcion);
-
-            if (trabajadorObj.has("usuarios") && !trabajadorObj.isNull("usuarios")) {
-                JSONObject usuarioObj = trabajadorObj.getJSONObject("usuarios");
-                trabajador.setNombreUsuario(usuarioObj.optString("name", "N/A"));
+            
+            // Verificamos si existe el objeto trabajador
+            if (favoritoObj.has("trabajadores") && !favoritoObj.isNull("trabajadores")) {
+                JSONObject trabajadorObj = favoritoObj.getJSONObject("trabajadores");
+                
+                int id = trabajadorObj.getInt("id");
+                int usuarioId = trabajadorObj.getInt("usuario_id");
+                int categoriaId = trabajadorObj.getInt("categoria_id");
+                boolean disponibilidad = trabajadorObj.optBoolean("disponibilidad", true);
+                String descripcion = trabajadorObj.optString("descripcion", "");
+                
+                Trabajador trabajador = new Trabajador(id, usuarioId, categoriaId, disponibilidad, descripcion);
+                
+                // Nombre del usuario (Trabajador)
+                if (trabajadorObj.has("usuarios") && !trabajadorObj.isNull("usuarios")) {
+                    JSONObject usuarioObj = trabajadorObj.getJSONObject("usuarios");
+                    trabajador.setNombreUsuario(usuarioObj.optString("name", "N/A"));
+                }
+                
+                // Nombre de la categoría
+                if (trabajadorObj.has("categorias") && !trabajadorObj.isNull("categorias")) {
+                    JSONObject catObj = trabajadorObj.getJSONObject("categorias");
+                    trabajador.setNombreCategoria(catObj.optString("nombre", "N/A"));
+                }
+                
+                favoritos.add(trabajador);
             }
-
-            if (trabajadorObj.has("categorias") && !trabajadorObj.isNull("categorias")) {
-                JSONObject categoriaObj = trabajadorObj.getJSONObject("categorias");
-                // Asumiendo que quieres guardar el nombre de la categoría en el modelo Trabajador
-                // necesitarás añadir un campo y sus getter/setter en el modelo.
-            }
-
-            favoritos.add(trabajador);
         }
         return favoritos;
+    }
+
+    public static List<Zona> parseZonas(String jsonResponse) throws JSONException {
+        List<Zona> zonas = new ArrayList<>();
+        JSONArray jsonArray = new JSONArray(jsonResponse);
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject obj = jsonArray.getJSONObject(i);
+            int id = obj.getInt("id");
+            String nombre = obj.getString("nombre");
+            zonas.add(new Zona(id, nombre));
+        }
+        return zonas;
     }
 
     public static List<Categoria> parseCategorias(String jsonResponse) throws JSONException {
         List<Categoria> categorias = new ArrayList<>();
         JSONArray jsonArray = new JSONArray(jsonResponse);
-
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
             int id = obj.getInt("id");
@@ -152,7 +204,6 @@ public class DataParser {
     public static List<DireccionCliente> parseDirecciones(String jsonResponse) throws JSONException {
         List<DireccionCliente> direcciones = new ArrayList<>();
         JSONArray jsonArray = new JSONArray(jsonResponse);
-
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
             int id = obj.getInt("id");
@@ -160,23 +211,9 @@ public class DataParser {
             String numero = obj.optString("numero", "S/N");
             String colonia = obj.optString("colonia", "");
             String municipio = obj.optString("municipio", "");
-
             DireccionCliente direccion = new DireccionCliente(id, 0, 0, calle, numero, colonia, "", "", municipio, "");
             direcciones.add(direccion);
         }
         return direcciones;
-    }
-
-    public static List<Zona> parseZonas(String jsonResponse) throws JSONException {
-        List<Zona> zonas = new ArrayList<>();
-        JSONArray jsonArray = new JSONArray(jsonResponse);
-
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject obj = jsonArray.getJSONObject(i);
-            int id = obj.getInt("id");
-            String nombre = obj.getString("nombre");
-            zonas.add(new Zona(id, nombre));
-        }
-        return zonas;
     }
 }

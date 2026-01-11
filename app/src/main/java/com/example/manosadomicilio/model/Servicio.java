@@ -15,7 +15,12 @@ public class Servicio {
     private BigDecimal precio;
     private Integer calificacionCliente;
     private Integer calificacionTrabajador;
-    private String nombreTrabajador; // Nuevo campo
+    private String comentariosCliente;    // Comentario del cliente sobre el trabajador
+    private String comentariosTrabajador; // Comentario del trabajador sobre el cliente
+    private String nombreTrabajador;
+    private String nombreCliente;
+    private boolean pagoRealizado;
+    private String direccionCompleta;
 
     public Servicio(int id, int usuarioId, int trabajadorId, int categoriaId, int direccionClienteId, String fecha, String horaInicial, String descripcion, String estado, BigDecimal precio, Integer calificacionCliente, Integer calificacionTrabajador) {
         this.id = id;
@@ -45,8 +50,18 @@ public class Servicio {
     public BigDecimal getPrecio() { return precio; }
     public Integer getCalificacionCliente() { return calificacionCliente; }
     public Integer getCalificacionTrabajador() { return calificacionTrabajador; }
-    public String getNombreTrabajador() { return nombreTrabajador; } // Nuevo getter
+    public String getComentariosCliente() { return comentariosCliente; }
+    public String getComentariosTrabajador() { return comentariosTrabajador; }
+    public String getNombreTrabajador() { return nombreTrabajador; }
+    public String getNombreCliente() { return nombreCliente; }
+    public boolean isPagoRealizado() { return pagoRealizado; }
+    public String getDireccionCompleta() { return direccionCompleta; }
 
     // Setters
-    public void setNombreTrabajador(String nombreTrabajador) { this.nombreTrabajador = nombreTrabajador; } // Nuevo setter
+    public void setNombreTrabajador(String nombreTrabajador) { this.nombreTrabajador = nombreTrabajador; }
+    public void setNombreCliente(String nombreCliente) { this.nombreCliente = nombreCliente; }
+    public void setPagoRealizado(boolean pagoRealizado) { this.pagoRealizado = pagoRealizado; }
+    public void setDireccionCompleta(String direccionCompleta) { this.direccionCompleta = direccionCompleta; }
+    public void setComentariosCliente(String comentariosCliente) { this.comentariosCliente = comentariosCliente; }
+    public void setComentariosTrabajador(String comentariosTrabajador) { this.comentariosTrabajador = comentariosTrabajador; }
 }

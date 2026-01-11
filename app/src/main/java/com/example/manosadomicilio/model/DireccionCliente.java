@@ -1,5 +1,7 @@
 package com.example.manosadomicilio.model;
 
+import androidx.annotation.NonNull;
+
 public class DireccionCliente {
     private int id;
     private int usuarioId;
@@ -35,4 +37,10 @@ public class DireccionCliente {
     public String getEstado() { return estado; }
     public String getMunicipio() { return municipio; }
     public String getReferencias() { return referencias; }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return calle + " #" + numero + ", " + colonia;
+    }
 }

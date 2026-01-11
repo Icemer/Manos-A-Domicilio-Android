@@ -62,19 +62,29 @@
                 android:layout_marginBottom="10dp"/>
 
             <EditText android:id="@+id/etCalle" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Calle"/>
+            
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
                 <EditText android:id="@+id/etNumero" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:hint="Número"/>
-                <Spinner
-                    android:id="@+id/spinnerZonas"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="50dp"
-                    android:background="@android:drawable/btn_dropdown"/>
             </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Zona:"
+                android:layout_marginTop="8dp"
+                android:textStyle="bold"/>
+
+            <Spinner
+                android:id="@+id/spinnerZonas"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@android:drawable/btn_dropdown"
+                android:layout_marginTop="4dp"/>
+
             <EditText android:id="@+id/etColonia" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Colonia"/>
             <EditText android:id="@+id/etMunicipio" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Municipio"/>
             <EditText android:id="@+id/etEstado" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Estado"/>
-            <EditText android:id="@+id/etPais" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="País" android:text="México"/>
+            <!-- Campo País eliminado del diseño -->
             <EditText android:id="@+id/etReferencias" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Referencias"/>
         </LinearLayout>
 

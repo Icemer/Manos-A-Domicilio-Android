@@ -60,7 +60,7 @@ public class RegistroTrabajador extends BottomMenu {
         SupabaseClient.getCategorias(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                runOnUiThread(() -> Toast.makeText(RegistroTrabajador.this, "Error al cargar categorías", Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> Toast.makeText(RegistroTrabajador.this, "Error de red al cargar categorías", Toast.LENGTH_SHORT).show());
             }
 
             @Override
@@ -69,27 +69,31 @@ public class RegistroTrabajador extends BottomMenu {
                     try {
                         String responseData = response.body().string();
                         List<Categoria> listaCategorias = DataParser.parseCategorias(responseData);
-                        runOnUiThread(() -> mostrarCategoriasEnSpinner(listaCategorias));
+                        runOnUiThread(() -> {
+                            if (listaCategorias.isEmpty()) {
+                                Toast.makeText(RegistroTrabajador.this, "No hay categorías disponibles", Toast.LENGTH_SHORT).show();
+                            } else {
+                                ArrayAdapter<Categoria> adapter = new ArrayAdapter<>(RegistroTrabajador.this, android.R.layout.simple_spinner_dropdown_item, listaCategorias);
+                                spinnerCategorias.setAdapter(adapter);
+                            }
+                        });
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        runOnUiThread(() -> Toast.makeText(RegistroTrabajador.this, "Error al procesar categorías", Toast.LENGTH_SHORT).show());
                     }
                 }
             }
         });
     }
 
-    private void mostrarCategoriasEnSpinner(List<Categoria> categorias) {
-        ArrayAdapter<Categoria> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categorias);
-        spinnerCategorias.setAdapter(adapter);
-    }
-
     private void registrarTrabajador() {
-        Categoria categoriaSeleccionada = (Categoria) spinnerCategorias.getSelectedItem();
-        if (categoriaSeleccionada == null) {
-            Toast.makeText(this, "Seleccione una categoría", Toast.LENGTH_SHORT).show();
+        Object selectedItem = spinnerCategorias.getSelectedItem();
+        if (!(selectedItem instanceof Categoria)) {
+            Toast.makeText(this, "Por favor, seleccione una categoría válida", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        Categoria categoriaSeleccionada = (Categoria) selectedItem;
         int categoriaId = categoriaSeleccionada.getId();
         String descripcion = etDescripcion.getText().toString().trim();
         boolean isAvailable = spinnerDisponibilidad.getSelectedItem().toString().equals("Disponible");
@@ -98,56 +102,28 @@ public class RegistroTrabajador extends BottomMenu {
         int usuarioId = prefs.getInt("usuario_id", -1);
 
         if (usuarioId == -1) {
-            Toast.makeText(this, "Error: Usuario no identificado.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Error: Sesión no válida.", Toast.LENGTH_LONG).show();
             return;
         }
 
         btnRegistrarse.setEnabled(false);
-        btnRegistrarse.setText("Verificando...");
+        btnRegistrarse.setText("Registrando...");
 
-        SupabaseClient.checkTrabajadorExiste(usuarioId, new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                mostrarError("Error de conexión al verificar");
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful() && response.body() != null) {
-                    try {
-                        JSONArray jsonArray = new JSONArray(response.body().string());
-                        if (jsonArray.length() > 0) {
-                            mostrarError("¡Ya estás registrado como trabajador!");
-                        } else {
-                            performRegistration(usuarioId, categoriaId, isAvailable, descripcion);
-                        }
-                    } catch (JSONException e) {
-                        mostrarError("Error procesando verificación");
-                    }
-                } else {
-                    mostrarError("Error del servidor al verificar");
-                }
-            }
-        });
-    }
-
-    private void performRegistration(int usuarioId, int categoriaId, boolean isAvailable, String descripcion) {
-        runOnUiThread(() -> btnRegistrarse.setText("Registrando..."));
         SupabaseClient.insertTrabajador(usuarioId, categoriaId, isAvailable, descripcion, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                mostrarError("Error de conexión al registrar");
+                mostrarError("Error al conectar con el servidor");
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
                     runOnUiThread(() -> {
-                        Toast.makeText(RegistroTrabajador.this, "¡Trabajador registrado con éxito!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegistroTrabajador.this, "¡Registro completado!", Toast.LENGTH_SHORT).show();
                         finish();
                     });
                 } else {
-                    mostrarError("Error al registrar.");
+                    mostrarError("Error: " + response.code());
                 }
             }
         });

@@ -1,7 +1,11 @@
 package com.example.manosadomicilio.controller;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 import okhttp3.*;
 
@@ -14,7 +18,7 @@ public class SupabaseClient {
 
     public void getUsers(Callback callback) {
         Request request = new Request.Builder()
-                .url(BASE_URL + "users") // la tabla que quieres
+                .url(BASE_URL + "users")
                 .addHeader("apikey", API_KEY)
                 .addHeader("Authorization", "Bearer " + API_KEY)
                 .addHeader("Accept", "application/json")
@@ -62,8 +66,9 @@ public class SupabaseClient {
     }
 
     public static void getCategorias(Callback callback) {
+        // Se añade descripción a la consulta para que coincida con el modelo Categoria
         Request request = new Request.Builder()
-                .url(BASE_URL + "categorias?select=id,nombre")
+                .url(BASE_URL + "categorias?select=id,nombre,descripcion")
                 .addHeader("apikey", API_KEY)
                 .addHeader("Authorization", "Bearer " + API_KEY)
                 .build();
@@ -100,12 +105,47 @@ public class SupabaseClient {
         client.newCall(request).enqueue(callback);
     }
 
+    public static void getTrabajadorPorUsuarioId(int usuarioId, Callback callback) {
+        String url = BASE_URL + "trabajadores?usuario_id=eq." + usuarioId + "&select=*&limit=1";
+
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("apikey", API_KEY)
+                .addHeader("Authorization", "Bearer " + API_KEY)
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
     public static void getTrabajadoresPorCategoria(int categoriaId, Callback callback) {
 
         String url = BASE_URL + "trabajadores?select=id,descripcion,disponibilidad,usuarios!usuario_id(name)&categoria_id=eq." + categoriaId;
 
         Request request = new Request.Builder()
                 .url(url)
+                .addHeader("apikey", API_KEY)
+                .addHeader("Authorization", "Bearer " + API_KEY)
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
+    public static void searchTrabajadores(String searchText, Callback callback) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("search_text", searchText);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequestBody body = RequestBody.create(
+                jsonObject.toString(),
+                MediaType.parse("application/json; charset=utf-8")
+        );
+
+        Request request = new Request.Builder()
+                .url(BASE_URL + "rpc/search_trabajadores")
+                .post(body)
                 .addHeader("apikey", API_KEY)
                 .addHeader("Authorization", "Bearer " + API_KEY)
                 .build();
@@ -175,7 +215,7 @@ public class SupabaseClient {
         try {
             jsonObject.put("usuario_id", usuarioId);
             jsonObject.put("trabajador_id", trabajadorId);
-            jsonObject.put("categoria_id", categoriaId); // <-- DESCOMENTADO
+            jsonObject.put("categoria_id", categoriaId);
             jsonObject.put("direccion_cliente_id", direccionId);
             jsonObject.put("fecha", fecha);
             jsonObject.put("hora_inicial", hora);
@@ -202,7 +242,31 @@ public class SupabaseClient {
     }
 
     public static void getServiciosPorUsuario(int usuarioId, Callback callback) {
-        String url = BASE_URL + "servicios?usuario_id=eq." + usuarioId + "&select=*,trabajadores(usuarios(name))";
+        String url = BASE_URL + "servicios?usuario_id=eq." + usuarioId + "&select=*,trabajadores(usuarios(name)),direcciones_cliente(*)";
+
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("apikey", API_KEY)
+                .addHeader("Authorization", "Bearer " + API_KEY)
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
+    public static void getServiciosFinalizadosPorUsuario(int usuarioId, Callback callback) {
+        String url = BASE_URL + "servicios?usuario_id=eq." + usuarioId + "&estado=eq.finalizado&select=id,descripcion";
+
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("apikey", API_KEY)
+                .addHeader("Authorization", "Bearer " + API_KEY)
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
+    public static void getServiciosPorTrabajador(int trabajadorId, Callback callback) {
+        String url = BASE_URL + "servicios?trabajador_id=eq." + trabajadorId + "&select=*,usuarios(name),direcciones_cliente(*)";
 
         Request request = new Request.Builder()
                 .url(url)
@@ -214,7 +278,7 @@ public class SupabaseClient {
     }
 
     public static void getServicioPorId(int servicioId, Callback callback) {
-        String url = BASE_URL + "servicios?id=eq." + servicioId + "&select=*,trabajadores(usuarios(name))&limit=1";
+        String url = BASE_URL + "servicios?id=eq." + servicioId + "&select=*,trabajadores(usuarios(name)),pagos(*),direcciones_cliente(*)&limit=1";
 
         Request request = new Request.Builder()
                 .url(url)
@@ -229,6 +293,32 @@ public class SupabaseClient {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("estado", nuevoEstado);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequestBody body = RequestBody.create(
+                jsonObject.toString(),
+                MediaType.parse("application/json; charset=utf-8")
+        );
+
+        Request request = new Request.Builder()
+                .url(BASE_URL + "servicios?id=eq." + servicioId)
+                .patch(body)
+                .addHeader("apikey", API_KEY)
+                .addHeader("Authorization", "Bearer " + API_KEY)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Prefer", "return=minimal")
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
+    public static void updateServicioFinalizado(int servicioId, BigDecimal precio, Callback callback) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("estado", "finalizado");
+            jsonObject.put("precio", precio);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -276,6 +366,32 @@ public class SupabaseClient {
         client.newCall(request).enqueue(callback);
     }
 
+    public static void updateCalificacionCliente(int servicioId, int calificacion, String comentarios, Callback callback) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("calificacion_cliente", calificacion);
+            jsonObject.put("comentarios_trabajador", (comentarios == null || comentarios.isEmpty()) ? JSONObject.NULL : comentarios);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequestBody body = RequestBody.create(
+                jsonObject.toString(),
+                MediaType.parse("application/json; charset=utf-8")
+        );
+
+        Request request = new Request.Builder()
+                .url(BASE_URL + "servicios?id=eq." + servicioId)
+                .patch(body)
+                .addHeader("apikey", API_KEY)
+                .addHeader("Authorization", "Bearer " + API_KEY)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Prefer", "return=minimal")
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
     public static void getZonas(Callback callback) {
         String url = BASE_URL + "zonas?select=id,nombre";
 
@@ -283,6 +399,60 @@ public class SupabaseClient {
                 .url(url)
                 .addHeader("apikey", API_KEY)
                 .addHeader("Authorization", "Bearer " + API_KEY)
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
+    public static void getZonasTrabajador(int trabajadorId, Callback callback) {
+        String url = BASE_URL + "zonas_trabajador?trabajador_id=eq." + trabajadorId + "&select=zona_id";
+
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("apikey", API_KEY)
+                .addHeader("Authorization", "Bearer " + API_KEY)
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
+    public static void deleteZonasTrabajador(int trabajadorId, Callback callback) {
+        String url = BASE_URL + "zonas_trabajador?trabajador_id=eq." + trabajadorId;
+
+        Request request = new Request.Builder()
+                .url(url)
+                .delete()
+                .addHeader("apikey", API_KEY)
+                .addHeader("Authorization", "Bearer " + API_KEY)
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
+    public static void setZonasTrabajador(int trabajadorId, List<Integer> zonaIds, Callback callback) {
+        JSONArray jsonArray = new JSONArray();
+        for (Integer zonaId : zonaIds) {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("trabajador_id", trabajadorId);
+                jsonObject.put("zona_id", zonaId);
+                jsonArray.put(jsonObject);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        RequestBody body = RequestBody.create(
+                jsonArray.toString(),
+                MediaType.parse("application/json; charset=utf-8")
+        );
+
+        Request request = new Request.Builder()
+                .url(BASE_URL + "zonas_trabajador")
+                .post(body)
+                .addHeader("apikey", API_KEY)
+                .addHeader("Authorization", "Bearer " + API_KEY)
+                .addHeader("Content-Type", "application/json")
                 .build();
 
         client.newCall(request).enqueue(callback);
@@ -347,6 +517,86 @@ public class SupabaseClient {
                 .url(url)
                 .addHeader("apikey", API_KEY)
                 .addHeader("Authorization", "Bearer " + API_KEY)
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
+    public static void updateTrabajador(int trabajadorId, String descripcion, boolean disponibilidad, Callback callback) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("descripcion", descripcion);
+            jsonObject.put("disponibilidad", disponibilidad);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequestBody body = RequestBody.create(
+                jsonObject.toString(),
+                MediaType.parse("application/json; charset=utf-8")
+        );
+
+        Request request = new Request.Builder()
+                .url(BASE_URL + "trabajadores?id=eq." + trabajadorId)
+                .patch(body)
+                .addHeader("apikey", API_KEY)
+                .addHeader("Authorization", "Bearer " + API_KEY)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Prefer", "return=minimal")
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+    public static void insertarPago(int servicioId, BigDecimal monto, String metodoPago, Callback callback) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("servicio_id", servicioId);
+            jsonObject.put("monto", monto);
+            jsonObject.put("metodo_pago", metodoPago);
+            jsonObject.put("estado", "pagado");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequestBody body = RequestBody.create(
+                jsonObject.toString(),
+                MediaType.parse("application/json; charset=utf-8")
+        );
+
+        Request request = new Request.Builder()
+                .url(BASE_URL + "pagos")
+                .post(body)
+                .addHeader("apikey", API_KEY)
+                .addHeader("Authorization", "Bearer " + API_KEY)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Prefer", "return=minimal")
+                .build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
+    public static void insertarTicket(int servicioId, String descripcion, Callback callback) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("servicio_id", servicioId);
+            jsonObject.put("descripcion", descripcion);
+            jsonObject.put("estado", "abierto");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequestBody body = RequestBody.create(
+                jsonObject.toString(),
+                MediaType.parse("application/json; charset=utf-8")
+        );
+
+        Request request = new Request.Builder()
+                .url(BASE_URL + "tickets")
+                .post(body)
+                .addHeader("apikey", API_KEY)
+                .addHeader("Authorization", "Bearer " + API_KEY)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Prefer", "return=minimal")
                 .build();
 
         client.newCall(request).enqueue(callback);

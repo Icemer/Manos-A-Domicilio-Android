@@ -36,8 +36,13 @@ public class FavoritosAdapter extends RecyclerView.Adapter<FavoritosAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Trabajador trabajador = favoritosList.get(position);
         holder.tvNombreFavorito.setText(trabajador.getNombreUsuario());
-        // TODO: Set category name from trabajador model
-        holder.tvCategoriaFavorito.setText("Categoría");
+        
+        // Muestra el nombre de la categoría si está disponible
+        if (trabajador.getNombreCategoria() != null) {
+            holder.tvCategoriaFavorito.setText(trabajador.getNombreCategoria());
+        } else {
+            holder.tvCategoriaFavorito.setText("Categoría #" + trabajador.getCategoriaId());
+        }
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, DetalleTrabajador.class);

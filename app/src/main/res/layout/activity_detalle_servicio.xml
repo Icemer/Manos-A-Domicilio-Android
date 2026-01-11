@@ -49,6 +49,18 @@
             app:layout_constraintTop_toBottomOf="@+id/tvDetalleFecha" />
 
         <TextView
+            android:id="@+id/tvMontoAPagar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Monto a Pagar: $0.00"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDetalleEstado" />
+
+        <TextView
             android:id="@+id/tvDetalleDescripcion"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -57,7 +69,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDetalleEstado" />
+            app:layout_constraintTop_toBottomOf="@+id/tvMontoAPagar" />
 
         <Button
             android:id="@+id/btnCancelarServicio"
@@ -68,52 +80,82 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDetalleDescripcion" />
+            app:layout_constraintTop_toBottomOf="@+id/tvDetalleDescripcion"
+            android:backgroundTint="@color/azulVerde"
+            />
 
         <Button
-            android:id="@+id/btnMarcarComoPagado"
+            android:id="@+id/btnPagar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Marcar como Pagado"
+            android:text="Pagar"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnCancelarServicio" />
+            app:layout_constraintTop_toBottomOf="@+id/btnCancelarServicio"
+            android:backgroundTint="@color/azulVerde"
+            />
 
-        <EditText
-            android:id="@+id/etComentarios"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/llFormularioCalificacion"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Comentarios"
+            android:orientation="vertical"
             android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnMarcarComoPagado" />
+            app:layout_constraintTop_toBottomOf="@id/btnPagar">
 
-        <RatingBar
-            android:id="@+id/rbCalificacion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:numStars="5"
-            android:stepSize="1"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etComentarios" />
+            <EditText
+                android:id="@+id/etComentarios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Comentarios sobre el trabajador" />
 
-        <Button
-            android:id="@+id/btnEnviarCalificacion"
-            android:layout_width="0dp"
+            <RatingBar
+                android:id="@+id/rbCalificacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:numStars="5"
+                android:stepSize="1" />
+
+            <Button
+                android:id="@+id/btnEnviarCalificacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Enviar Calificación al Trabajador"
+                android:backgroundTint="@color/azulVerde" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llResumenCalificaciones"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Enviar Calificación"
+            android:orientation="vertical"
             android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rbCalificacion" />
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/llFormularioCalificacion">
+
+            <TextView
+                android:id="@+id/tvCalificacionDada"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Calificación enviada: N/A"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvCalificacionRecibida"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Calificación del trabajador: N/A"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

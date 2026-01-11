@@ -21,20 +21,25 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.Perfil" android:exported="true"/>
         <activity android:name=".view.CategoriaCerrajeria" android:exported="true"/>
         <activity android:name=".view.CategoriaFumigacion" android:exported="true"/>
         <activity android:name=".view.CategoriaJardineria" android:exported="true"/>
         <activity android:name=".view.CategoriaLimpieza" android:exported="true"/>
         <activity android:name=".view.CategoriaPintura" android:exported="true"/>
-        <activity android:name=".view.Home" android:exported="true"/>
-        <activity android:name=".view.RegistroUsuario" android:exported="true"/>
-        <activity android:name=".view.RegistroTrabajador" android:exported="true"/>
-        <activity android:name=".view.DetalleTrabajador"/>
-        <activity android:name=".view.SolicitudServicio"/>
-        <activity android:name=".view.HistorialServicios" />
+        <activity android:name=".view.DashboardTrabajador" />
         <activity android:name=".view.DetalleServicioActivity" />
-        <activity android:name=".view.Favoritos" />" />
+        <activity android:name=".view.DetalleServicioAsignado" />
+        <activity android:name=".view.DetalleTrabajador"/>
+        <activity android:name=".view.EditarPerfilTrabajador" />
+        <activity android:name=".view.Favoritos" />
+        <activity android:name=".view.GestionarZonasActivity" />
+        <activity android:name=".view.HistorialServicios" />
+        <activity android:name=".view.Home" android:exported="true"/>
+        <activity android:name=".view.Perfil" android:exported="true"/>
+        <activity android:name=".view.RegistroTrabajador" android:exported="true"/>
+        <activity android:name=".view.RegistroUsuario" android:exported="true"/>
+        <activity android:name=".view.Soporte" />
+        <activity android:name=".view.SolicitudServicio"/>
     </application>
 
 </manifest>

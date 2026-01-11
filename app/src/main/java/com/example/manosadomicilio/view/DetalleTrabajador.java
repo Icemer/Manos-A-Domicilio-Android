@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.manosadomicilio.R;
 import com.example.manosadomicilio.controller.BottomMenu;
@@ -18,6 +17,7 @@ import com.example.manosadomicilio.controller.SupabaseClient;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -27,10 +27,10 @@ import okhttp3.Response;
 
 public class DetalleTrabajador extends BottomMenu {
 
-    private TextView tvNombre, tvDescripcion, tvEstado;
+    private TextView tvNombre, tvDescripcion, tvEstado, tvCategoria;
     private Button btnSolicitar;
     private ImageView ivFavorito;
-    private int categoriaId;
+    private int categoriaId = -1; // Inicializamos en -1
     private int trabajadorId;
     private int usuarioId;
     private boolean isFavorito = false;
@@ -45,6 +45,7 @@ public class DetalleTrabajador extends BottomMenu {
         tvNombre = findViewById(R.id.tvDetalleNombre);
         tvDescripcion = findViewById(R.id.tvDetalleDescripcion);
         tvEstado = findViewById(R.id.tvDetalleEstado);
+        tvCategoria = findViewById(R.id.tvDetalleCategoria);
         btnSolicitar = findViewById(R.id.btnSolicitarServicio);
         ivFavorito = findViewById(R.id.ivFavorito);
 
@@ -52,6 +53,8 @@ public class DetalleTrabajador extends BottomMenu {
         String nombre = intent.getStringExtra("nombre");
         String descripcion = intent.getStringExtra("descripcion");
         trabajadorId = intent.getIntExtra("id", -1);
+        
+        // Intentamos obtenerlo del intent, pero lo validaremos con la DB
         categoriaId = intent.getIntExtra("categoriaId", -1);
 
         tvNombre.setText(nombre);
@@ -64,7 +67,15 @@ public class DetalleTrabajador extends BottomMenu {
             checkIfFavorito();
         }
 
+        if (trabajadorId != -1) {
+            cargarDatosTrabajador();
+        }
+
         btnSolicitar.setOnClickListener(v -> {
+            if (categoriaId == -1) {
+                Toast.makeText(this, "Cargando información de categoría...", Toast.LENGTH_SHORT).show();
+                return;
+            }
             Intent i = new Intent(DetalleTrabajador.this, SolicitudServicio.class);
             i.putExtra("idTrabajador", trabajadorId);
             i.putExtra("categoriaId", categoriaId);
@@ -74,12 +85,49 @@ public class DetalleTrabajador extends BottomMenu {
         ivFavorito.setOnClickListener(v -> toggleFavorito());
     }
 
+    private void cargarDatosTrabajador() {
+        // Obtenemos el trabajador con el nombre de su categoría y el ID real
+        String url = "https://ipofxhlkuqrvqhcpnveu.supabase.co/rest/v1/trabajadores?id=eq." + trabajadorId + "&select=categoria_id,categorias(nombre)";
+        
+        okhttp3.Request request = new okhttp3.Request.Builder()
+                .url(url)
+                .addHeader("apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlwb2Z4aGxrdXFydnFoY3BudmV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQzNjY5NDAsImV4cCI6MjA3OTk0Mjk0MH0.UbLE9bg6Zq3L45FOW4lLLGYdCJQ8FJXn9d6Y5TCsrII")
+                .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlwb2Z4aGxrdXFydnFoY3BudmV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQzNjY5NDAsImV4cCI6MjA3OTk0Mjk0MH0.UbLE9bg6Zq3L45FOW4lLLGYdCJQ8FJXn9d6Y5TCsrII")
+                .build();
+
+        new okhttp3.OkHttpClient().newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {}
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful() && response.body() != null) {
+                    try {
+                        String responseData = response.body().string();
+                        JSONArray jsonArray = new JSONArray(responseData);
+                        if (jsonArray.length() > 0) {
+                            JSONObject obj = jsonArray.getJSONObject(0);
+                            
+                            // Actualizamos el categoriaId real desde la base de datos
+                            categoriaId = obj.getInt("categoria_id");
+                            
+                            if (obj.has("categorias")) {
+                                String nombreCat = obj.getJSONObject("categorias").getString("nombre");
+                                runOnUiThread(() -> tvCategoria.setText(nombreCat));
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
     private void checkIfFavorito() {
         SupabaseClient.isFavorito(usuarioId, trabajadorId, new Callback() {
             @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                // No es necesario mostrar un error, simplemente no se marcará como favorito
-            }
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {}
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {

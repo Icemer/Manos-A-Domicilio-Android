@@ -7,6 +7,7 @@ public class Trabajador {
     private boolean disponibilidad;
     private String descripcion;
     private String nombreUsuario;
+    private String nombreCategoria;
 
     public Trabajador(int id, int usuarioId, int categoriaId, boolean disponibilidad, String descripcion) {
         this.id = id;
@@ -24,4 +25,12 @@ public class Trabajador {
 
     public String getNombreUsuario() { return nombreUsuario; }
     public void setNombreUsuario(String nombreUsuario) { this.nombreUsuario = nombreUsuario; }
+
+    public String getNombreCategoria() {
+        return nombreCategoria;
+    }
+
+    public void setNombreCategoria(String nombreCategoria) {
+        this.nombreCategoria = nombreCategoria;
+    }
 }

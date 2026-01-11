@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -38,7 +39,7 @@ public class SolicitudServicio extends AppCompatActivity {
 
     private Spinner spinnerDirecciones, spinnerZonas;
     private EditText etFecha, etHora;
-    private EditText etDescripcion, etCalle, etNumero, etColonia, etMunicipio, etEstado, etPais, etReferencias;
+    private EditText etDescripcion, etCalle, etNumero, etColonia, etMunicipio, etEstado, etReferencias;
     private Button btnConfirmarSolicitud;
     private LinearLayout containerNuevaDireccion;
 
@@ -50,10 +51,13 @@ public class SolicitudServicio extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.solicitud_servicio);
 
+        // Recuperar IDs con logs para depuración
         idTrabajador = getIntent().getIntExtra("idTrabajador", -1);
         categoriaId = getIntent().getIntExtra("categoriaId", -1);
         SharedPreferences prefs = getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
         usuarioId = prefs.getInt("usuario_id", -1);
+
+        Log.d("SolicitudServicio", "IDs cargados: Usuario=" + usuarioId + ", Trabajador=" + idTrabajador + ", Cat=" + categoriaId);
 
         bindUI();
         setupListeners();
@@ -73,7 +77,6 @@ public class SolicitudServicio extends AppCompatActivity {
         etColonia = findViewById(R.id.etColonia);
         etMunicipio = findViewById(R.id.etMunicipio);
         etEstado = findViewById(R.id.etEstado);
-        etPais = findViewById(R.id.etPais);
         etReferencias = findViewById(R.id.etReferencias);
         btnConfirmarSolicitud = findViewById(R.id.btnConfirmarSolicitud);
         containerNuevaDireccion = findViewById(R.id.containerNuevaDireccion);
@@ -95,7 +98,7 @@ public class SolicitudServicio extends AppCompatActivity {
         if (usuarioId == -1) return;
         SupabaseClient.getDireccionesUsuario(usuarioId, new Callback() {
             @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) { /* ... */ }
+            public void onFailure(@NonNull Call call, @NonNull IOException e) { }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
@@ -116,7 +119,7 @@ public class SolicitudServicio extends AppCompatActivity {
     private void cargarZonas() {
         SupabaseClient.getZonas(new Callback() {
             @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) { /* ... */ }
+            public void onFailure(@NonNull Call call, @NonNull IOException e) { }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
@@ -135,6 +138,11 @@ public class SolicitudServicio extends AppCompatActivity {
     }
 
     private void confirmarSolicitud() {
+        if (usuarioId == -1 || idTrabajador == -1 || categoriaId == -1) {
+            Toast.makeText(this, "Error de sesión o datos del trabajador incompletos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         btnConfirmarSolicitud.setEnabled(false);
         btnConfirmarSolicitud.setText("Procesando...");
 
@@ -143,7 +151,7 @@ public class SolicitudServicio extends AppCompatActivity {
         } else {
             DireccionCliente direccionSeleccionada = (DireccionCliente) spinnerDirecciones.getSelectedItem();
             if (direccionSeleccionada == null) {
-                mostrarError("Por favor, seleccione o agregue una dirección");
+                mostrarError("Selecciona o agrega una dirección");
                 return;
             }
             crearServicio(direccionSeleccionada.getId());
@@ -151,38 +159,39 @@ public class SolicitudServicio extends AppCompatActivity {
     }
 
     private void guardarNuevaDireccionYCrearServicio() {
-
         Zona zonaSeleccionada = (Zona) spinnerZonas.getSelectedItem();
         if (zonaSeleccionada == null) {
-            mostrarError("Debe seleccionar una zona para la nueva dirección");
+            mostrarError("Selecciona una zona");
             return;
         }
-        int zonaId = zonaSeleccionada.getId();
 
         String calle = etCalle.getText().toString();
         String numero = etNumero.getText().toString();
         String colonia = etColonia.getText().toString();
         String municipio = etMunicipio.getText().toString();
         String estado = etEstado.getText().toString();
-        String pais = etPais.getText().toString();
-        String referencias = etReferencias.getText().toString();
 
-        SupabaseClient.insertDireccion(usuarioId, zonaId, calle, numero, colonia, municipio, estado, pais, referencias, new Callback() {
+        if (calle.isEmpty() || numero.isEmpty() || colonia.isEmpty()) {
+            mostrarError("Calle, número y colonia son obligatorios");
+            return;
+        }
+
+        SupabaseClient.insertDireccion(usuarioId, zonaSeleccionada.getId(), calle, numero, colonia, municipio, estado, "México", etReferencias.getText().toString(), new Callback() {
             @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) { mostrarError("Error guardando dirección"); }
+            public void onFailure(@NonNull Call call, @NonNull IOException e) { mostrarError("Error de red al guardar dirección"); }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful() && response.body() != null) {
                     try {
-                        JSONArray jsonArray = new JSONArray(response.body().string());
+                        String body = response.body().string();
+                        JSONArray jsonArray = new JSONArray(body);
                         if (jsonArray.length() > 0) {
-                            JSONObject newAddress = jsonArray.getJSONObject(0);
-                            int nuevaDireccionId = newAddress.getInt("id");
+                            int nuevaDireccionId = jsonArray.getJSONObject(0).getInt("id");
                             crearServicio(nuevaDireccionId);
                         }
-                    } catch (JSONException e) { mostrarError("Error procesando respuesta de dirección"); }
-                } else { mostrarError("Fallo al guardar dirección: " + response.code()); }
+                    } catch (JSONException e) { mostrarError("Error al procesar nueva dirección"); }
+                } else { mostrarError("Conflicto al guardar dirección: " + response.code()); }
             }
         });
     }
@@ -193,23 +202,24 @@ public class SolicitudServicio extends AppCompatActivity {
         String descripcion = etDescripcion.getText().toString();
 
         if (fecha.isEmpty() || hora.isEmpty() || descripcion.isEmpty()) {
-            mostrarError("Complete todos los detalles del servicio (fecha, hora y descripción)");
+            mostrarError("Completa la fecha, hora y descripción");
             return;
         }
 
         SupabaseClient.insertServicio(usuarioId, idTrabajador, categoriaId, direccionId, fecha, hora, descripcion, new Callback() {
             @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) { mostrarError("Error creando el servicio"); }
+            public void onFailure(@NonNull Call call, @NonNull IOException e) { mostrarError("Error de red al solicitar"); }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
                     runOnUiThread(() -> {
-                        Toast.makeText(SolicitudServicio.this, "Servicio solicitado con éxito", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SolicitudServicio.this, "¡Servicio solicitado!", Toast.LENGTH_LONG).show();
                         finish();
                     });
                 } else {
-                    mostrarError("No se pudo crear el servicio: " + response.code() + " " + response.message());
+                    mostrarError("Error del servidor (409): Verifica los datos relacionados.");
+                    Log.e("SolicitudServicio", "Error 409 detectado. Body: " + response.peekBody(2048).string());
                 }
             }
         });
