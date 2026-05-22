@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hoja / Eco leaf (jardinería) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#004532"
+        android:pathData="M6.05,8.5c0.44,4.19,3.15,7.56,7.28,7.95V18H11v2h4v-2h-2.27v-1.55C16.85,16.06,20,12.68,20,8.5V6H6.05V8.5zM8,8h10v0.5c0,2.76,-2.24,5,-5,5S8,11.26,8,8.5V8z" />
+    <path
+        android:fillColor="#004532"
+        android:pathData="M12,3L9,6h2v3h2V6h2z" />
+</vector>

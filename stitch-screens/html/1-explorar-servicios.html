@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HandyMatch - Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#0b1c30",
+                        "inverse-on-surface": "#eaf1ff",
+                        "surface": "#f8f9ff",
+                        "on-tertiary-fixed": "#131b2e",
+                        "surface-container-low": "#eff4ff",
+                        "on-tertiary-fixed-variant": "#3f465c",
+                        "secondary-fixed-dim": "#45dfa4",
+                        "on-secondary-container": "#00714e",
+                        "inverse-surface": "#213145",
+                        "on-tertiary": "#ffffff",
+                        "secondary": "#006c4b",
+                        "surface-variant": "#d3e4fe",
+                        "background": "#f8f9ff",
+                        "on-tertiary-container": "#bfc7e1",
+                        "inverse-primary": "#8bd6b6",
+                        "on-primary-fixed-variant": "#00513b",
+                        "tertiary-fixed": "#dae2fd",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#f8f9ff",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#0b1c30",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed": "#68fcbf",
+                        "primary-fixed": "#a6f2d1",
+                        "primary": "#004532",
+                        "surface-container-highest": "#d3e4fe",
+                        "primary-fixed-dim": "#8bd6b6",
+                        "error": "#ba1a1a",
+                        "surface-tint": "#1b6b51",
+                        "tertiary-container": "#4b5369",
+                        "primary-container": "#065f46",
+                        "outline": "#6f7973",
+                        "on-secondary-fixed-variant": "#005137",
+                        "surface-container-high": "#dce9ff",
+                        "tertiary-fixed-dim": "#bec6e0",
+                        "tertiary": "#343c51",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#e5eeff",
+                        "on-error": "#ffffff",
+                        "surface-dim": "#cbdbf5",
+                        "on-primary-fixed": "#002116",
+                        "on-surface-variant": "#3f4944",
+                        "secondary-container": "#64f9bc",
+                        "on-error-container": "#93000a",
+                        "on-primary-container": "#8bd6b7",
+                        "outline-variant": "#bec9c2",
+                        "on-secondary-fixed": "#002114"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "32px",
+                        "margin": "20px",
+                        "gutter": "16px",
+                        "lg": "24px",
+                        "md": "16px",
+                        "sm": "8px",
+                        "unit": "4px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Manrope"],
+                        "body-md": ["Manrope"],
+                        "display-md": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "label-lg": ["Manrope"],
+                        "display-lg": ["Manrope"],
+                        "headline-md": ["Manrope"],
+                        "body-sm": ["Manrope"],
+                        "label-sm": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-md": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "display-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        /* Ambient depth utilities */
+        .ambient-shadow { box-shadow: 0 4px 20px -2px rgba(0, 69, 50, 0.05); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-body-md antialiased pb-24 md:pb-0">
+<!-- TopAppBar (Mobile) -->
+<header class="md:hidden sticky top-0 z-40 bg-surface dark:bg-on-background w-full px-margin py-sm flex justify-between items-center transition-colors duration-200 ease-in-out border-b border-outline-variant dark:border-outline">
+<button class="text-on-surface-variant p-2 -ml-2 rounded-full hover:bg-surface-container dark:hover:bg-inverse-surface">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed" style="font-variation-settings: 'FILL' 0;">menu</span>
+</button>
+<h1 class="font-display-md text-display-md text-primary dark:text-primary-fixed">HandyMatch</h1>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="A close up portrait of a young woman smiling brightly. The lighting is soft and natural, creating a welcoming and trustworthy mood. The background is slightly blurred to keep focus on her face. The overall aesthetic is professional, clean, and modern, fitting a high-quality service app profile picture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-JYT3okHQTSkrc_Fa75RERK_rZzdUKDph2fsh3bCAw9gl82xZsKQ6tDutjQ8pewHgNehWxuYOHuxNdquHZB88MGYhgxN2ld5atmbankI-TzUg3kPaHoo9BrxQqKmNdOe8hPnzWjx6TGVpTmNY24tjfYDi8180Fusxaw5EWDo39EGFcsxD7sT22nZYjwcBi0GRPFu0QAd0dS7KagNR3SUletQFHQ6M5SfU6FN7VVIsRZ1b1nCT4jKr3HN1HUcy0WG10UIyRlfCyQM"/>
+</div>
+</header>
+<!-- TopAppBar (Web) -->
+<header class="hidden md:flex sticky top-0 z-40 bg-surface dark:bg-on-background w-full px-margin py-sm justify-between items-center transition-colors duration-200 ease-in-out border-b border-outline-variant dark:border-outline">
+<div class="flex items-center gap-8">
+<button class="text-on-surface-variant p-2 -ml-2 rounded-full hover:bg-surface-container dark:hover:bg-inverse-surface lg:hidden">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed" style="font-variation-settings: 'FILL' 0;">menu</span>
+</button>
+<h1 class="font-display-md text-display-md text-primary dark:text-primary-fixed">HandyMatch</h1>
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-primary dark:text-primary-fixed font-bold hover:bg-surface-container dark:hover:bg-inverse-surface px-4 py-2 rounded-lg transition-colors duration-200 ease-in-out" href="#">Home</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container dark:hover:bg-inverse-surface px-4 py-2 rounded-lg transition-colors duration-200 ease-in-out" href="#">Search</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container dark:hover:bg-inverse-surface px-4 py-2 rounded-lg transition-colors duration-200 ease-in-out" href="#">Bookings</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant p-2 rounded-full hover:bg-surface-container dark:hover:bg-inverse-surface">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+<div class="flex items-center gap-3 hover:bg-surface-container dark:hover:bg-inverse-surface p-1 pr-3 rounded-full cursor-pointer transition-colors duration-200 ease-in-out border border-transparent hover:border-outline-variant">
+<div class="w-10 h-10 rounded-full overflow-hidden">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="A close up portrait of a young woman smiling brightly. The lighting is soft and natural, creating a welcoming and trustworthy mood. The background is slightly blurred to keep focus on her face. The overall aesthetic is professional, clean, and modern, fitting a high-quality service app profile picture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0Z69LAp8Gh8EHv0i4QRXbZqKzv9mEmwmEFDlmQSaT7yYEznBUXpq_Vz2DNTObE17HcrREQFZHg_6Y1sHYAsDe5mrN0_3DLY_PVqzAiHfW2MKY92EMFlaBkzYnyuATlKxNzJaNly_cPf7jfEp93DHe23KnQO7x7N6NUq9_6jvxp_NLYs_86V91gITFAU5Vl8evIkFyd24td-UOMWaPLp54ddDJGJF_l87qtvbkAZU0g0Qgyj4KFecRbCIDfKEeT97t1Pc9JMG7ZF8"/>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface">Profile</span>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-margin md:px-8 py-xl flex flex-col gap-xl">
+<!-- Search Bar Section -->
+<section class="w-full">
+<div class="relative w-full max-w-2xl mx-auto">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 0;">search</span>
+</div>
+<input class="block w-full pl-12 pr-4 py-4 bg-surface-container-lowest border border-outline-variant rounded-full text-body-lg text-on-surface placeholder:text-on-surface-variant focus:ring-2 focus:ring-primary focus:border-transparent ambient-shadow transition-shadow outline-none" placeholder="What service do you need today?" type="text"/>
+<button class="absolute inset-y-1 right-1 px-6 bg-primary text-on-primary font-label-lg text-label-lg rounded-full hover:bg-primary-container transition-colors flex items-center justify-center">
+                    Search
+                </button>
+</div>
+</section>
+<!-- Categories Grid -->
+<section>
+<div class="flex justify-between items-end mb-md">
+<h2 class="font-headline-lg text-headline-lg text-on-background">Explore Categories</h2>
+<button class="font-label-lg text-label-lg text-primary hover:text-primary-container transition-colors">View All</button>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
+<!-- Gardening -->
+<a class="group flex flex-col items-center p-md bg-surface-container-lowest border border-outline-variant rounded-xl ambient-shadow hover:shadow-md transition-all duration-300 transform hover:-translate-y-1" href="#">
+<div class="w-16 h-16 rounded-lg bg-surface-container-low text-primary flex items-center justify-center mb-sm group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 0;">potted_plant</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface text-center">Gardening</span>
+</a>
+<!-- Painting -->
+<a class="group flex flex-col items-center p-md bg-surface-container-lowest border border-outline-variant rounded-xl ambient-shadow hover:shadow-md transition-all duration-300 transform hover:-translate-y-1" href="#">
+<div class="w-16 h-16 rounded-lg bg-surface-container-low text-primary flex items-center justify-center mb-sm group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 0;">format_paint</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface text-center">Painting</span>
+</a>
+<!-- Locksmith -->
+<a class="group flex flex-col items-center p-md bg-surface-container-lowest border border-outline-variant rounded-xl ambient-shadow hover:shadow-md transition-all duration-300 transform hover:-translate-y-1" href="#">
+<div class="w-16 h-16 rounded-lg bg-surface-container-low text-primary flex items-center justify-center mb-sm group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 0;">key</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface text-center">Locksmith</span>
+</a>
+<!-- Pest Control -->
+<a class="group flex flex-col items-center p-md bg-surface-container-lowest border border-outline-variant rounded-xl ambient-shadow hover:shadow-md transition-all duration-300 transform hover:-translate-y-1" href="#">
+<div class="w-16 h-16 rounded-lg bg-surface-container-low text-primary flex items-center justify-center mb-sm group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 0;">pest_control</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface text-center">Pest Control</span>
+</a>
+</div>
+</section>
+<!-- Featured Professionals (Bento-ish asymmetric layout) -->
+<section>
+<h2 class="font-headline-lg text-headline-lg text-on-background mb-md">Featured Professionals</h2>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Large Feature Card -->
+<div class="md:col-span-8 bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden ambient-shadow flex flex-col md:flex-row">
+<div class="w-full md:w-2/5 h-48 md:h-full relative">
+<img alt="Professional Painter" class="w-full h-full object-cover" data-alt="A professional painter in crisp white overalls carefully applying a fresh coat of bright, clean paint to a living room wall. Natural sunlight streams through a nearby window, highlighting the smooth texture of the wall. The mood is focused, reliable, and high-quality. The color palette emphasizes clean whites and soft natural tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDedhBZXf1quVxMqKp06fe2Mab2wkrAQ6At3oSLW1TFZSAcv83ATL1hLK2u09_UjcUCinSsBzc94jRqpX6wHZwLestiTSc9lwhX4T7P8aJeaBSXgdu11RGRr3qKobGwbkthWKYrMgkZdJC9RWFL6-wD8vA82FStSG-_F5jDVxOWy_l4gYd1uTAEIiEACyZ7hAoLxiMf_016a6hUYD7AYdbA24D1OpKe-G9pdLQDmembCIYUBDJxKXOn73JJvxzUi6jM0xJldzU1Dqg"/>
+<div class="absolute top-2 left-2 bg-surface-container-lowest/90 backdrop-blur-sm px-2 py-1 rounded-lg flex items-center gap-1 border border-outline-variant/50">
+<span class="material-symbols-outlined text-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-label-sm text-label-sm text-on-surface">Top Rated</span>
+</div>
+</div>
+<div class="p-lg flex flex-col justify-between w-full md:w-3/5">
+<div>
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Michael Torres</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Master Painter &amp; Decorator</p>
+</div>
+<div class="flex items-center gap-1 bg-surface-container px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined text-[#F59E0B] text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md text-on-surface">4.9</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-2 mt-4">
+<span class="px-2 py-1 bg-surface-container-low text-primary border border-outline-variant/30 rounded-md font-label-sm text-label-sm">12 yrs exp.</span>
+<span class="px-2 py-1 bg-surface-container-low text-primary border border-outline-variant/30 rounded-md font-label-sm text-label-sm">2.4 miles away</span>
+<span class="px-2 py-1 bg-surface-container-low text-primary border border-outline-variant/30 rounded-md font-label-sm text-label-sm">150+ jobs</span>
+</div>
+</div>
+<div class="mt-6 flex gap-3">
+<button class="flex-1 bg-primary text-on-primary font-label-lg text-label-lg py-3 rounded-lg hover:bg-primary-container transition-colors">Book Now</button>
+<button class="px-4 py-3 border border-primary text-primary font-label-lg text-label-lg rounded-lg hover:bg-surface-container-low transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">chat</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Small Feature Card -->
+<div class="md:col-span-4 bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden ambient-shadow flex flex-col">
+<div class="w-full h-32 relative bg-surface-container-high">
+<img alt="Expert Gardener" class="w-full h-full object-cover opacity-80 mix-blend-multiply" data-alt="A skilled gardener kneeling in a lush, vibrant green garden, carefully pruning a small shrub. The lighting is bright and sunny, conveying a fresh and healthy outdoor environment. The mood is calm, precise, and deeply connected to nature. The color palette is dominated by rich, healthy greens and earthy browns." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvokyAo_C5rrK5jdqYR0TH-FUjt5AaYgLWtHtze2MFfTcU2NFFv7cBQ0lGh07CYM_nxQLRgYUw7pBZsF7tPJ2pfZxqE4DPFPDmMvsK7i-PewukfE19oWO2FF19079IhN6ecnMxpJ184xX9CroQOg3rhttKNfluaDGyeM-iM7jbUxFKfJ-mb7AsvC9HWWJeq5Ahj35CCEcw1VDmmXc6tg2deEvFIWRPFhFuNlFwoF0RROmtp2Lg2K_dHCy9dGXbXbUJicCqd5Jvxk0"/>
+</div>
+<div class="p-md flex flex-col flex-grow relative">
+<div class="w-16 h-16 rounded-full border-4 border-surface-container-lowest absolute -top-8 left-md overflow-hidden bg-surface">
+<img alt="Sarah Jenkins portrait" class="w-full h-full object-cover" data-alt="A professional headshot of an experienced female landscape architect. She wears a sturdy, earth-toned work shirt. The background is a soft, out-of-focus garden setting. She looks confident, approachable, and highly capable. The overall look is clean, modern, and trustworthy." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD49vuuYjoI4ZZy0iTXWTzJ8Fl6it76YuoZ5F0y_511i29dxetpORqEmKvaOAhFXpwRpehfUniuRXc83iuZW8XC5XWlR_YH2B41zcF_t-daGTK8ix4xc5LNS688j_0UowYpAsAeyagdV1-Ko1avRX5rd-yqDInbmNzDfEIIJgEgO8YtjiLA5Yyfi3127zmD5ACnLVerVIRNOwuFxnBxukEjI5ju80FnFXLHXuqplwWaSvog3B1sUXHE8fZnNp0IBT0IS0bUxZPbk08"/>
+</div>
+<div class="mt-8 flex justify-between items-start">
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface">Sarah Jenkins</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Landscape Architect</p>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[#F59E0B] text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm text-on-surface">4.8</span>
+</div>
+</div>
+<button class="mt-auto pt-4 w-full text-primary font-label-lg text-label-lg text-center hover:text-primary-container transition-colors">View Profile</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Popular Services List -->
+<section>
+<div class="flex justify-between items-end mb-md">
+<h2 class="font-headline-lg text-headline-lg text-on-background">Popular Right Now</h2>
+</div>
+<div class="flex flex-col gap-sm">
+<!-- Service Item 1 -->
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest border border-outline-variant rounded-xl ambient-shadow hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">water_drop</span>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg text-on-surface">Emergency Plumbing Leak</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Fast response • Starts at $80</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" style="font-variation-settings: 'FILL' 0;">chevron_right</span>
+</div>
+<!-- Service Item 2 -->
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest border border-outline-variant rounded-xl ambient-shadow hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">cleaning_services</span>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg text-on-surface">Deep House Cleaning</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Top rated • Starts at $120</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" style="font-variation-settings: 'FILL' 0;">chevron_right</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-margin py-2 bg-surface-container-lowest dark:bg-inverse-surface border-t border-outline-variant dark:border-outline shadow-sm dark:shadow-none">
+<!-- Active Tab: Home -->
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed bg-secondary-container/20 dark:bg-secondary-container/10 rounded-xl px-4 py-1 scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</a>
+<!-- Inactive Tab: Search -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-1 hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">search</span>
+<span class="font-label-sm text-label-sm mt-1">Search</span>
+</a>
+<!-- Inactive Tab: Bookings -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-1 hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">event_available</span>
+<span class="font-label-sm text-label-sm mt-1">Bookings</span>
+</a>
+<!-- Inactive Tab: Profile -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-1 hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">person</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</a>
+</nav>
+</body></html>
