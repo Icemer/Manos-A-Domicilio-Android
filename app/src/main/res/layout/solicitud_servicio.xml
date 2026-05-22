@@ -1,140 +1,367 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
-    android:background="#F5F5F5">
+    android:background="@color/stitchBackground"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Solicitar Servicio"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="@color/azulVerde"
-            android:layout_marginBottom="20dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1. Selecciona Ubicación"
-            android:textStyle="bold"
-            android:textSize="18sp"/>
-
-        <Spinner
-            android:id="@+id/spinnerDirecciones"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@android:drawable/btn_dropdown"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"/>
-
-        <Button
-            android:id="@+id/btnToggleDireccion"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Agregar nueva dirección"
-            android:layout_gravity="end"
-            android:textColor="@color/azulVerde"/>
-
+        <!-- Top bar -->
         <LinearLayout
-            android:id="@+id/containerNuevaDireccion"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            android:background="@color/stitchSurfaceContainerLowest"
+            android:elevation="4dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Solicitar Servicio"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/stitchOnSurface"
+                android:fontFamily="sans-serif-medium" />
+        </LinearLayout>
+
+        <!-- Form content -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone"
-            android:background="#FFFFFF"
-            android:padding="15dp"
-            android:elevation="2dp">
+            android:padding="20dp">
 
-            <TextView
+            <!-- Address section -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardDireccion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nueva Dirección"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/stitchOutlineVariant"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@color/stitchSurfaceContainerLowest">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dirección de Servicio"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/stitchOnSurface"
+                        android:fontFamily="sans-serif-medium"
+                        android:layout_marginBottom="12dp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerDirecciones"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@color/stitchSurfaceContainerLow"
+                        android:paddingHorizontal="12dp"
+                        android:layout_marginBottom="10dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnToggleDireccion"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="+ Agregar nueva dirección"
+                        android:textSize="13sp"
+                        android:textColor="@color/stitchPrimary"
+                        app:strokeColor="@color/stitchOutlineVariant"
+                        app:cornerRadius="8dp" />
+
+                    <!-- New address container (shown/hidden by Java) -->
+                    <LinearLayout
+                        android:id="@+id/containerNuevaDireccion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:layout_marginTop="12dp">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Calle"
+                            app:boxStrokeColor="@color/stitchOutlineVariant"
+                            app:boxCornerRadiusTopStart="8dp"
+                            app:boxCornerRadiusTopEnd="8dp"
+                            app:boxCornerRadiusBottomStart="8dp"
+                            app:boxCornerRadiusBottomEnd="8dp"
+                            android:layout_marginBottom="10dp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etCalle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="text"
+                                android:textColor="@color/stitchOnSurface" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Número"
+                            app:boxStrokeColor="@color/stitchOutlineVariant"
+                            app:boxCornerRadiusTopStart="8dp"
+                            app:boxCornerRadiusTopEnd="8dp"
+                            app:boxCornerRadiusBottomStart="8dp"
+                            app:boxCornerRadiusBottomEnd="8dp"
+                            android:layout_marginBottom="10dp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etNumero"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="text"
+                                android:textColor="@color/stitchOnSurface" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <Spinner
+                            android:id="@+id/spinnerZonas"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:background="@color/stitchSurfaceContainerLow"
+                            android:paddingHorizontal="12dp"
+                            android:layout_marginBottom="10dp" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Colonia"
+                            app:boxStrokeColor="@color/stitchOutlineVariant"
+                            app:boxCornerRadiusTopStart="8dp"
+                            app:boxCornerRadiusTopEnd="8dp"
+                            app:boxCornerRadiusBottomStart="8dp"
+                            app:boxCornerRadiusBottomEnd="8dp"
+                            android:layout_marginBottom="10dp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etColonia"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="text"
+                                android:textColor="@color/stitchOnSurface" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Municipio"
+                            app:boxStrokeColor="@color/stitchOutlineVariant"
+                            app:boxCornerRadiusTopStart="8dp"
+                            app:boxCornerRadiusTopEnd="8dp"
+                            app:boxCornerRadiusBottomStart="8dp"
+                            app:boxCornerRadiusBottomEnd="8dp"
+                            android:layout_marginBottom="10dp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etMunicipio"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="text"
+                                android:textColor="@color/stitchOnSurface" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Estado"
+                            app:boxStrokeColor="@color/stitchOutlineVariant"
+                            app:boxCornerRadiusTopStart="8dp"
+                            app:boxCornerRadiusTopEnd="8dp"
+                            app:boxCornerRadiusBottomStart="8dp"
+                            app:boxCornerRadiusBottomEnd="8dp"
+                            android:layout_marginBottom="10dp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etEstado"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="text"
+                                android:textColor="@color/stitchOnSurface" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Referencias"
+                            app:boxStrokeColor="@color/stitchOutlineVariant"
+                            app:boxCornerRadiusTopStart="8dp"
+                            app:boxCornerRadiusTopEnd="8dp"
+                            app:boxCornerRadiusBottomStart="8dp"
+                            app:boxCornerRadiusBottomEnd="8dp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etReferencias"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="text"
+                                android:textColor="@color/stitchOnSurface" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Date & Time section -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardFechaHora"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/stitchOutlineVariant"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@color/stitchSurfaceContainerLowest">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fecha y Hora"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/stitchOnSurface"
+                        android:fontFamily="sans-serif-medium"
+                        android:layout_marginBottom="12dp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Fecha (YYYY-MM-DD)"
+                        app:boxStrokeColor="@color/stitchOutlineVariant"
+                        app:boxCornerRadiusTopStart="8dp"
+                        app:boxCornerRadiusTopEnd="8dp"
+                        app:boxCornerRadiusBottomStart="8dp"
+                        app:boxCornerRadiusBottomEnd="8dp"
+                        android:layout_marginBottom="10dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etFecha"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="date"
+                            android:textColor="@color/stitchOnSurface" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Hora (HH:MM)"
+                        app:boxStrokeColor="@color/stitchOutlineVariant"
+                        app:boxCornerRadiusTopStart="8dp"
+                        app:boxCornerRadiusTopEnd="8dp"
+                        app:boxCornerRadiusBottomStart="8dp"
+                        app:boxCornerRadiusBottomEnd="8dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etHora"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="time"
+                            android:textColor="@color/stitchOnSurface" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Description section -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardDescServicio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/stitchOutlineVariant"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="@color/stitchSurfaceContainerLowest">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Descripción del Servicio"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/stitchOnSurface"
+                        android:fontFamily="sans-serif-medium"
+                        android:layout_marginBottom="12dp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="¿Qué necesitas?"
+                        app:boxStrokeColor="@color/stitchOutlineVariant"
+                        app:boxCornerRadiusTopStart="8dp"
+                        app:boxCornerRadiusTopEnd="8dp"
+                        app:boxCornerRadiusBottomStart="8dp"
+                        app:boxCornerRadiusBottomEnd="8dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etDescServicio"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:inputType="textMultiLine"
+                            android:gravity="top"
+                            android:textColor="@color/stitchOnSurface" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Confirm button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnConfirmarSolicitud"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="Confirmar Solicitud"
+                android:textSize="15sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="10dp"/>
+                android:textColor="@color/white"
+                android:backgroundTint="@color/stitchPrimary"
+                app:cornerRadius="12dp"
+                android:layout_marginBottom="16dp" />
 
-            <EditText android:id="@+id/etCalle" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Calle"/>
-            
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-                <EditText android:id="@+id/etNumero" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:hint="Número"/>
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Zona:"
-                android:layout_marginTop="8dp"
-                android:textStyle="bold"/>
-
-            <Spinner
-                android:id="@+id/spinnerZonas"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@android:drawable/btn_dropdown"
-                android:layout_marginTop="4dp"/>
-
-            <EditText android:id="@+id/etColonia" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Colonia"/>
-            <EditText android:id="@+id/etMunicipio" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Municipio"/>
-            <EditText android:id="@+id/etEstado" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Estado"/>
-            <!-- Campo País eliminado del diseño -->
-            <EditText android:id="@+id/etReferencias" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Referencias"/>
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#CCCCCC"
-            android:layout_marginVertical="20dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2. Detalles del Servicio"
-            android:textStyle="bold"
-            android:textSize="18sp"/>
-
-        <EditText
-            android:id="@+id/etFecha"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Fecha (YYYY-MM-DD)"
-            android:focusable="false"
-            android:layout_marginTop="10dp"/>
-
-        <EditText
-            android:id="@+id/etHora"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Hora (HH:MM:SS)"
-            android:focusable="false"
-            android:layout_marginTop="10dp"/>
-
-        <EditText
-            android:id="@+id/etDescServicio"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:hint="Describe qué necesitas..."
-            android:gravity="top"
-            android:background="#FFFFFF"
-            android:padding="10dp"
-            android:layout_marginTop="10dp"/>
-
-        <Button
-            android:id="@+id/btnConfirmarSolicitud"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Confirmar Solicitud"
-            android:backgroundTint="@color/azulVerde"
-            android:layout_marginTop="30dp"
-            android:padding="15dp"/>
-
     </LinearLayout>
+
 </ScrollView>

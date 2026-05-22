@@ -1,169 +1,482 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/main">
+    android:background="@color/stitchBackground">
 
-    <ImageView
+    <!-- ===== HERO GRADIENT ===== -->
+    <View
+        android:id="@+id/heroBg"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:background="@drawable/bg_hero_gradient"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- ivLogo oculto — Java lo referencia con findViewById pero no se usa visualmente -->
+    <View
         android:id="@+id/ivLogo"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/logo_chiquito"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/ivCerrajeria"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/logo_cerrajeria"
-        app:layout_constraintEnd_toStartOf="@id/ivLimpieza"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivLogo"
-        />
-
-    <TextView
-        android:id="@+id/tvCerrajeria"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Cerrajeria"
-        android:textAlignment="center"
-        android:textColor="@color/azulMarino"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@id/tvLimpieza"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivCerrajeria" />
-
-    <TextView
-        android:id="@+id/tvLimpieza"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Limpieza"
-        android:textAlignment="center"
-        android:textColor="@color/azulMarino"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@id/tvPintura"
-        app:layout_constraintStart_toEndOf="@id/tvCerrajeria"
-        app:layout_constraintTop_toBottomOf="@id/ivLimpieza" />
-
-    <TextView
-        android:id="@+id/tvPintura"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Pintura"
-        android:textAlignment="center"
-        android:textColor="@color/azulMarino"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tvLimpieza"
-        app:layout_constraintTop_toBottomOf="@id/ivPintura" />
-
-    <ImageView
-        android:id="@+id/ivFumigacion"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/logo_fumigacion"
-        app:layout_constraintEnd_toStartOf="@+id/ivJardineria"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvCerrajeria" />
-
-    <TextView
-        android:id="@+id/tvFumigacion"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Fumigacion"
-        android:textAlignment="center"
-        android:textColor="@color/azulMarino"
-        android:textSize="19sp"
-        app:layout_constraintEnd_toStartOf="@id/tvJardineria"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivFumigacion" />
-
-    <ImageView
-        android:id="@+id/ivJardineria"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/logo_jardineria"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ivFumigacion"
-        app:layout_constraintTop_toBottomOf="@id/tvPintura" />
-
-    <TextView
-        android:id="@+id/tvJardineria"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Jardineria"
-        android:textAlignment="center"
-        android:textColor="@color/azulMarino"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tvFumigacion"
-        app:layout_constraintTop_toBottomOf="@id/ivJardineria" />
-
-    <ImageView
-        android:id="@+id/ivPintura"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/logo_pintura"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ivLimpieza"
-        app:layout_constraintTop_toBottomOf="@id/ivLogo" />
-
-    <ImageView
-        android:id="@+id/ivLimpieza"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/logo_limpieza"
-        app:layout_constraintEnd_toStartOf="@id/ivPintura"
-        app:layout_constraintStart_toEndOf="@id/ivCerrajeria"
-        app:layout_constraintTop_toBottomOf="@id/ivLogo" />
-
-    <TextView
-        android:id="@+id/tvPregunta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="¿Quieres trabajar con nosotros?"
-        android:textSize="20sp"
-        android:textColor="@color/azulVerde"
-        android:layout_marginTop="20dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/tvFumigacion"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/btnRegistrarse"
-        android:layout_width="wrap_content"
+    <!-- Greeting texts -->
+    <TextView
+        android:id="@+id/tvGreeting"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/azulVerde"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/tvPregunta"
+        android:text="Bienvenido 👋"
+        android:textColor="#AADECC"
+        android:textSize="17sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="Registrarse"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <TextView
+        android:id="@+id/tvAppTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Manos a Domicilio"
+        android:textColor="@color/white"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-medium"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toBottomOf="@id/tvGreeting"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvSubtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="¿Qué servicio necesitas hoy?"
+        android:textColor="#B2D8CC"
+        android:textSize="13sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toBottomOf="@id/tvAppTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- ===== FLOATING SEARCH PILL ===== -->
+    <LinearLayout
+        android:id="@+id/searchPill"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/bg_search_pill"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="158dp"
+        android:elevation="6dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:text="🔍"
+            android:textSize="15sp"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Buscar profesionales..."
+            android:textSize="14sp"
+            android:textColor="@color/stitchNavInactive"
+            android:layout_marginStart="10dp" />
+    </LinearLayout>
+
+    <!-- ===== MAIN SCROLL ===== -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/searchPill"
+        app:layout_constraintBottom_toTopOf="@id/menuInferior"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="24dp"
+            android:paddingBottom="16dp">
+
+            <!-- Section header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Nuestros Servicios"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/stitchOnSurface"
+                    android:fontFamily="sans-serif-medium" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5 categorías"
+                    android:textSize="12sp"
+                    android:textColor="@color/stitchNavInactive" />
+            </LinearLayout>
+
+            <!-- ===== GRID FILA 1: Cerrajería + Limpieza ===== -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <!-- Card Cerrajería -->
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="148dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/bg_card_category"
+                    android:elevation="2dp"
+                    android:clipToOutline="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <FrameLayout
+                            android:layout_width="68dp"
+                            android:layout_height="68dp"
+                            android:background="@drawable/bg_icon_circle">
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/logo_cerrajeria"
+                                android:scaleType="centerInside"
+                                android:layout_gravity="center" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/tvCerrajeria"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cerrajería"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/stitchOnSurface"
+                            android:textAlignment="center"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="sans-serif-medium" />
+                    </LinearLayout>
+
+                    <!-- Tap target invisible (cubre toda la card) -->
+                    <ImageView
+                        android:id="@+id/ivCerrajeria"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="0"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground" />
+                </FrameLayout>
+
+                <!-- Card Limpieza -->
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="148dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    android:background="@drawable/bg_card_category"
+                    android:elevation="2dp"
+                    android:clipToOutline="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <FrameLayout
+                            android:layout_width="68dp"
+                            android:layout_height="68dp"
+                            android:background="@drawable/bg_icon_circle">
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/logo_limpieza"
+                                android:scaleType="centerInside"
+                                android:layout_gravity="center" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/tvLimpieza"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Limpieza"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/stitchOnSurface"
+                            android:textAlignment="center"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="sans-serif-medium" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/ivLimpieza"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="0"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <!-- ===== GRID FILA 2: Pintura + Fumigación ===== -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <!-- Card Pintura -->
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="148dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/bg_card_category"
+                    android:elevation="2dp"
+                    android:clipToOutline="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <FrameLayout
+                            android:layout_width="68dp"
+                            android:layout_height="68dp"
+                            android:background="@drawable/bg_icon_circle">
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/logo_pintura"
+                                android:scaleType="centerInside"
+                                android:layout_gravity="center" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/tvPintura"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Pintura"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/stitchOnSurface"
+                            android:textAlignment="center"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="sans-serif-medium" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/ivPintura"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="0"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground" />
+                </FrameLayout>
+
+                <!-- Card Fumigación -->
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="148dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    android:background="@drawable/bg_card_category"
+                    android:elevation="2dp"
+                    android:clipToOutline="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <FrameLayout
+                            android:layout_width="68dp"
+                            android:layout_height="68dp"
+                            android:background="@drawable/bg_icon_circle">
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/logo_fumigacion"
+                                android:scaleType="centerInside"
+                                android:layout_gravity="center" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/tvFumigacion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Fumigación"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/stitchOnSurface"
+                            android:textAlignment="center"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="sans-serif-medium" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/ivFumigacion"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="0"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <!-- ===== GRID FILA 3: Jardinería (mitad izquierda) ===== -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="24dp">
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="148dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/bg_card_category"
+                    android:elevation="2dp"
+                    android:clipToOutline="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <FrameLayout
+                            android:layout_width="68dp"
+                            android:layout_height="68dp"
+                            android:background="@drawable/bg_icon_circle">
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/logo_jardineria"
+                                android:scaleType="centerInside"
+                                android:layout_gravity="center" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/tvJardineria"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Jardinería"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/stitchOnSurface"
+                            android:textAlignment="center"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="sans-serif-medium" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/ivJardineria"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="0"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground" />
+                </FrameLayout>
+
+                <!-- Placeholder para mantener el grid de 2 columnas -->
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="148dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp" />
+            </LinearLayout>
+
+            <!-- Trabajador invitation (oculta, controlada por Java) -->
+            <TextView
+                android:id="@+id/tvPregunta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¿Quieres trabajar con nosotros?"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/stitchPrimary"
+                android:textAlignment="center"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRegistrarse"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:text="Registrarme como Profesional"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/stitchPrimary"
+                app:cornerRadius="12dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- ===== BOTTOM MENU ===== -->
     <include
         layout="@layout/bottom_menu"
         android:id="@+id/menuInferior"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="72dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

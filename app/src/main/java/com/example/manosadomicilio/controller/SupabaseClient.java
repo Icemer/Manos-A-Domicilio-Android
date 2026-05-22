@@ -14,7 +14,12 @@ public class SupabaseClient {
     private static final String BASE_URL = "https://ipofxhlkuqrvqhcpnveu.supabase.co/rest/v1/";
     private static final String API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlwb2Z4aGxrdXFydnFoY3BudmV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQzNjY5NDAsImV4cCI6MjA3OTk0Mjk0MH0.UbLE9bg6Zq3L45FOW4lLLGYdCJQ8FJXn9d6Y5TCsrII";
 
-    private static final OkHttpClient client = new OkHttpClient();
+    private static final OkHttpClient client = new OkHttpClient.Builder().build();
+
+    /** Devuelve el cliente HTTP compartido para uso externo. */
+    public static OkHttpClient getClient() {
+        return client;
+    }
 
     public void getUsers(Callback callback) {
         Request request = new Request.Builder()
@@ -490,7 +495,7 @@ public class SupabaseClient {
                 .addHeader("apikey", API_KEY)
                 .addHeader("Authorization", "Bearer " + API_KEY)
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Prefer", "return=minimal")
+                .addHeader("Prefer", "return=representation")
                 .build();
 
         client.newCall(request).enqueue(callback);

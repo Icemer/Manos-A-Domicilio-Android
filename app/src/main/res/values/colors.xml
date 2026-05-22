@@ -2,9 +2,35 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!-- Legacy (compatibilidad con código Java existente) -->
     <color name="azulVerde">#2dbaa7</color>
     <color name="verde">#87c03d</color>
     <color name="azulMarino">#1a6d7d</color>
     <color name="azulGris">#5F7C8A</color>
     <color name="red">#FF0000</color>
+    <!-- Sistema de colores Stitch / Green Professional Finder -->
+    <color name="stitchPrimary">#004532</color>
+    <color name="stitchPrimaryContainer">#065F46</color>
+    <color name="stitchOnPrimary">#FFFFFF</color>
+    <color name="stitchSecondary">#006C4B</color>
+    <color name="stitchBackground">#F8F9FF</color>
+    <color name="stitchSurface">#F8F9FF</color>
+    <color name="stitchSurfaceContainer">#E5EEFF</color>
+    <color name="stitchSurfaceContainerLow">#EFF4FF</color>
+    <color name="stitchSurfaceContainerLowest">#FFFFFF</color>
+    <color name="stitchSurfaceContainerHigh">#DCE9FF</color>
+    <color name="stitchOutline">#6F7973</color>
+    <color name="stitchOutlineVariant">#BEC9C2</color>
+    <color name="stitchOnSurface">#0B1C30</color>
+    <color name="stitchOnSurfaceVariant">#3F4944</color>
+    <color name="stitchStar">#F59E0B</color>
+    <color name="stitchConfirmedBg">#DCFCE7</color>
+    <color name="stitchConfirmedText">#006C4B</color>
+    <color name="stitchPendingBg">#E5EEFF</color>
+    <color name="stitchPendingText">#3F4944</color>
+    <!-- Premium extras -->
+    <color name="stitchPrimaryLight">#E8F5EF</color>
+    <color name="stitchHeroEnd">#006C4B</color>
+    <color name="stitchCardBorder">#E0EBE6</color>
+    <color name="stitchNavInactive">#8FA89F</color>
 </resources>

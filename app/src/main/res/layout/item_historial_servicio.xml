@@ -1,45 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="8dp">
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/stitchOutlineVariant"
+    app:strokeWidth="1dp"
+    app:cardBackgroundColor="@color/stitchSurfaceContainerLowest">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/tvNombreTrabajador"
-            android:layout_width="wrap_content"
+        <!-- Bloque de fecha -->
+        <LinearLayout
+            android:layout_width="72dp"
             android:layout_height="wrap_content"
-            android:text="Nombre del Trabajador"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="8dp"
+            android:background="@color/stitchSurfaceContainerLow">
 
-        <TextView
-            android:id="@+id/tvFechaServicio"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/tvFechaServicio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha"
+                android:textSize="10sp"
+                android:textAllCaps="true"
+                android:textColor="@color/stitchOnSurfaceVariant"
+                android:letterSpacing="0.05"
+                android:fontFamily="sans-serif-medium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="@color/stitchPrimary" />
+        </LinearLayout>
+
+        <!-- Detalles del servicio -->
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Fecha: 2024-01-01"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNombreTrabajador" />
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp">
 
-        <TextView
-            android:id="@+id/tvEstadoServicio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Estado: Pendiente"
-            android:textSize="16sp"
-            android:textStyle="italic"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <!-- Fila: nombre + estado -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tvNombreTrabajador"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Nombre del Trabajador"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/stitchOnSurface"
+                    android:fontFamily="sans-serif-medium" />
 
-</androidx.cardview.widget.CardView>
+                <!-- Badge estado -->
+                <TextView
+                    android:id="@+id/tvEstadoServicio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pendiente"
+                    android:textSize="11sp"
+                    android:textColor="@color/stitchPrimary"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="3dp"
+                    android:background="@color/stitchSurfaceContainer"
+                    android:fontFamily="sans-serif-medium" />
+            </LinearLayout>
+
+            <!-- Separador visual -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/stitchOutlineVariant"
+                android:layout_marginVertical="8dp" />
+
+            <!-- Flecha acción -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ver detalles →"
+                    android:textSize="12sp"
+                    android:textColor="@color/stitchPrimary"
+                    android:fontFamily="sans-serif-medium" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

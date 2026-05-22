@@ -100,7 +100,7 @@ public class DetalleTrabajador extends BottomMenu {
                 .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlwb2Z4aGxrdXFydnFoY3BudmV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQzNjY5NDAsImV4cCI6MjA3OTk0Mjk0MH0.UbLE9bg6Zq3L45FOW4lLLGYdCJQ8FJXn9d6Y5TCsrII")
                 .build();
 
-        new okhttp3.OkHttpClient().newCall(request).enqueue(new Callback() {
+        SupabaseClient.getClient().newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {}
 
@@ -152,7 +152,7 @@ public class DetalleTrabajador extends BottomMenu {
                 .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlwb2Z4aGxrdXFydnFoY3BudmV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQzNjY5NDAsImV4cCI6MjA3OTk0Mjk0MH0.UbLE9bg6Zq3L45FOW4lLLGYdCJQ8FJXn9d6Y5TCsrII")
                 .build();
 
-        new okhttp3.OkHttpClient().newCall(request).enqueue(new Callback() {
+        SupabaseClient.getClient().newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {}
 
@@ -200,11 +200,16 @@ public class DetalleTrabajador extends BottomMenu {
     }
 
     private void toggleFavorito() {
+        if (usuarioId == -1) {
+            Toast.makeText(this, "Inicia sesión para usar favoritos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (isFavorito) {
             SupabaseClient.removeFavorito(usuarioId, trabajadorId, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    mostrarError("Error al quitar de favoritos");
+                    mostrarError("Error de conexión al quitar favorito");
                 }
 
                 @Override
@@ -213,6 +218,8 @@ public class DetalleTrabajador extends BottomMenu {
                         isFavorito = false;
                         updateFavoritoIcon();
                         runOnUiThread(() -> Toast.makeText(DetalleTrabajador.this, "Eliminado de favoritos", Toast.LENGTH_SHORT).show());
+                    } else {
+                        mostrarError("No se pudo quitar de favoritos (código " + response.code() + ")");
                     }
                 }
             });
@@ -220,7 +227,7 @@ public class DetalleTrabajador extends BottomMenu {
             SupabaseClient.addFavorito(usuarioId, trabajadorId, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    mostrarError("Error al agregar a favoritos");
+                    mostrarError("Error de conexión al agregar favorito");
                 }
 
                 @Override
@@ -228,7 +235,9 @@ public class DetalleTrabajador extends BottomMenu {
                     if (response.isSuccessful()) {
                         isFavorito = true;
                         updateFavoritoIcon();
-                        runOnUiThread(() -> Toast.makeText(DetalleTrabajador.this, "Agregado a favoritos", Toast.LENGTH_SHORT).show());
+                        runOnUiThread(() -> Toast.makeText(DetalleTrabajador.this, "Agregado a favoritos ❤️", Toast.LENGTH_SHORT).show());
+                    } else {
+                        mostrarError("No se pudo agregar a favoritos (código " + response.code() + ")");
                     }
                 }
             });
